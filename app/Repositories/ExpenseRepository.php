@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
+use Illuminate\Support\Collection;
 
 /**
  * Interface ExpenseRepository.
@@ -11,5 +12,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface ExpenseRepository extends RepositoryInterface
 {
-    //
+    public function getExpensesInMonthAndYearByUserAuthenticate(int $month, int $year) : Collection;
 }
