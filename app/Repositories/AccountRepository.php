@@ -11,5 +11,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface AccountRepository extends RepositoryInterface
 {
-    //
+    public function getBalance() : float;
 }

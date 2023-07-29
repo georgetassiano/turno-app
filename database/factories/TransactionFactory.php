@@ -20,10 +20,10 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'model_type' => $this->faker->randomElement(['deposit', 'expense']),
-            'model_id' => function (array $attributes) {
+            'transactable_type' => $this->faker->randomElement(['deposit', 'expense']),
+            'transactable_id' => function (array $attributes) {
                 $userId = Account::find($attributes['account_id'])->user_id;
-                return $attributes['model_type'] === 'deposit'
+                return $attributes['transactable_type'] === 'deposit'
                     ? Deposit::factory()->create(['user_id' => $userId])
                     : Expense::factory()->create(['user_id' => $userId]);
             },

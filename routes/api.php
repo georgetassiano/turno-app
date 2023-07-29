@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\User\AuthController as UserAuthController;
+use App\Http\Controllers\User\AccountController;
+use App\Http\Controllers\User\TransactionController;
+use App\Http\Controllers\User\ExpenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,74 +20,70 @@ use Illuminate\Support\Facades\Route;
 */
 
 // User authenticated routes
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:sanctum', 'abilities:guard-user'])->group(function () {
 
     // User auth routes
     Route::prefix('auth')->group(function() {
-        Route::post('/logout', 'Users\AuthController@logout');
-        Route::post('/refresh', 'Users\AuthController@refresh');
-        Route::post('/me', 'Users\AuthController@me');
+        Route::post('/logout', [UserAuthController::class, 'logout']);
     });
 
-    // User deposit routes
-    Route::prefix('deposits')->group(function() {
-        // create deposit
-        Route::post('/', 'Users\DepositController@store');
-        // get all deposits
-        Route::get('/', 'Users\DepositController@index');
-        // get single deposit
-        Route::get('/{deposit}', 'Users\DepositController@show');
-    });
+    // // User deposit routes
+    // Route::prefix('deposits')->group(function() {
+    //     // create deposit
+    //     Route::post('/', 'User\DepositController@store');
+    //     // get all deposits
+    //     Route::get('/', 'User\DepositController@index');
+    //     // get single deposit
+    //     Route::get('/{deposit}', 'User\DepositController@show');
+    // });
 
     // User expense routes
     Route::prefix('expenses')->group(function() {
         // create expense
-        Route::post('/', 'Users\ExpenseController@store');
+        Route::post('/', [ExpenseController::class, 'store']);
         // get all expenses
-        Route::get('/', 'Users\ExpenseController@index');
+        Route::get('/', [ExpenseController::class, 'index']);
     });
 
     // get user balance
-    Route::get('/balance', 'Users\AccountController@index');
+    Route::get('/balance', [AccountController::class, 'balance']);
 
     // get user transactions history (deposits and expenses)
-    Route::get('/transactions', 'Users\TransactionController@index');
+    Route::get('/transactions', [TransactionController::class, 'index']);
 });
 
 // User unauthenticated routes
 Route::prefix('auth')->group(function() {
-    Route::post('/login', 'Users\AuthController@login');
-    Route::post('/register', 'Users\AuthController@register');
+    Route::post('/login', [UserAuthController::class, 'login']);
+    Route::post('/register', [UserAuthController::class, 'register']);
 });
 
 // Admin routes
 Route::prefix('admin')->group(function() {
 
     // Admin authenticated routes
-    Route::middleware('auth:admin')->group(function () {
+    Route::middleware(['auth:sanctum', 'abilities:guard-admin'])->group(function () {
         // Admin auth routes
         Route::prefix('auth')->group(function() {
-            Route::post('/logout', 'Admin\AuthController@logout');
-            Route::post('/refresh', 'Admin\AuthController@refresh');
-            Route::post('/me', 'Admin\AuthController@me');
+            Route::post('/logout', [AdminAuthController::class, 'logout']);
         });
 
 
-        // Admin deposits routes
-        Route::prefix('deposits')->group(function() {
-            // get all deposits
-            Route::get('/', 'Admin\DepositController@index');
-            // get single deposit
-            Route::get('/{deposit}', 'Admin\DepositController@show');
-            // accept or reject deposit
-            Route::patch('/{deposit}', 'Admin\DepositController@acceptOrReject');
-        });
+    //     // Admin deposits routes
+    //     Route::prefix('deposits')->group(function() {
+    //         // get all deposits
+    //         Route::get('/', 'Admin\DepositController@index');
+    //         // get single deposit
+    //         Route::get('/{deposit}', 'Admin\DepositController@show');
+    //         // accept or reject deposit
+    //         Route::patch('/{deposit}', 'Admin\DepositController@acceptOrReject');
+    //     });
 
 
     });
 
     // Admin unauthenticated routes
     Route::prefix('auth')->group(function() {
-        Route::post('/login', 'Admin\AuthController@login');
+        Route::post('/login', [AdminAuthController::class, 'login']);
     });
 });
