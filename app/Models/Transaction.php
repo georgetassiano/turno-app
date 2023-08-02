@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Transaction.
- *
- * @package namespace App\Models;
  */
-class Transaction extends Model
+class Transaction extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory, \OwenIt\Auditing\Auditable;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -21,9 +21,11 @@ class Transaction extends Model
      */
     protected $guarded = ['created_at', 'updated_at'];
 
+    /**
+     * Get the owning transactable model.
+     */
     public function transactable(): MorphTo
     {
         return $this->morphTo();
     }
-
 }

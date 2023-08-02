@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->double('amount', 12, 2);
             $table->foreignId('user_id')->constrained();
-            $table->string('file_url');
+            $table->string('file_path');
             $table->enum('status', ['pending', 'rejected', 'approved'])->default('pending');
             $table->string('description');
             $table->timestamps();

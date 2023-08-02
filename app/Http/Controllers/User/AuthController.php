@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Services\UserAuthServiceInterface;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -19,23 +19,35 @@ class AuthController extends Controller
         $this->userAuthService = $userAuthService;
     }
 
-    public function login(LoginRequest $request) : JsonResponse | ValidationException
+    /**
+     * login user
+     */
+    public function login(LoginRequest $request): JsonResponse|ValidationException
     {
         $data = $request->validated();
         $token = $this->userAuthService->getTokenForCredentials($data);
+
         return response()->json($token);
     }
 
-    public function logout(Request $request) : JsonResponse
+    /**
+     * logout user
+     */
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
-        return response()->json("Usuário deslogado com sucesso");
+
+        return response()->json('Usuário deslogado com sucesso');
     }
 
-    public function register(RegisterUserRequest $request) : JsonResponse
+    /**
+     * register new user
+     */
+    public function register(RegisterUserRequest $request): JsonResponse
     {
         $data = $request->validated();
         $token = $this->userAuthService->registerNewUserAndCreateToken($data);
+
         return response()->json($token, 201);
     }
 }

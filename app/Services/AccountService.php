@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Services;
-use App\Repositories\AccountRepository;
+
+use App\Models\Account;
 use App\Models\User;
+use App\Repositories\AccountRepository;
 use Illuminate\Validation\ValidationException;
 
 class AccountService extends BaseService implements AccountServiceInterface
@@ -14,32 +16,64 @@ class AccountService extends BaseService implements AccountServiceInterface
         $this->accountRepository = $accountRepository;
     }
 
-    /* create account for user */
-    public function createAccountForUser(User $user) : void
+    /** create account for user
+     * @param  int  $userId
+     */
+    public function createAccountForUserId($userId): void
     {
         $this->accountRepository->create([
-            'user_id' => $user->id,
+            'user_id' => $userId,
         ]);
     }
 
-    /* get balance of authenticated user */
-    public function getBalance() : float
+    /**
+     * get account by authenticated user
+     *
+     * @return Account
+     */
+    public function getBalanceByUserId(int $userId): float
     {
-        return $this->accountRepository->getBalance();
+        $account = $this->getAccountByUserId($userId);
+
+        return $account->balance;
     }
 
-    public function throwInvalidAmountException() : ValidationException {
+    /**
+     * throw exception if amount is greater than balance
+     */
+    public function throwInvalidAmountException(): ValidationException
+    {
         throw ValidationException::withMessages([
-            'amount' => 'The amount is greater than the balance'
+            'amount' => 'The amount is greater than the balance',
         ]);
     }
 
-    public function debitAmount(float $amount) : void
+    /**
+     * debit amount from account
+     */
+    public function debitAmount(float $amount, int $userId): void
     {
-        $balance = $this->getBalance();
-        if ($amount > $balance) {
+        $account = $this->getAccountByUserId($userId);
+        if ($amount > $account->balance) {
             $this->throwInvalidAmountException();
         }
-        $this->accountRepository->update(['amount' => $balance - $amount],auth()->user()->account->id);
+        $this->accountRepository->update(['balance' => $account->balance - $amount], $account->id);
+    }
+
+    /**
+     * credit amount from account
+     */
+    public function creditAmount(float $amount, int $userId): void
+    {
+        $account = $this->getAccountByUserId($userId);
+        $this->accountRepository->update(['balance' => $account->balance + $amount], $account->id);
+    }
+
+    /**
+     * get account by user id
+     */
+    public function getAccountByUserId(int $userId): Account
+    {
+        return $this->accountRepository->getAccountByUserId($userId);
     }
 }

@@ -7,17 +7,13 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
  * Class UserAuthenticateCriteriaCriteria.
- *
- * @package namespace App\Criteria;
  */
 class UserAuthenticateCriteria implements CriteriaInterface
 {
     /**
      * Apply criteria in query repository
      *
-     * @param string              $model
-     * @param RepositoryInterface $repository
-     *
+     * @param  string  $model
      * @return mixed
      */
     public function apply($model, RepositoryInterface $repository)

@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Models\Transaction;
-use Illuminate\Support\Collection;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
-interface TransactionServiceInterface extends BaseServiceInterface {
-    public function index(Carbon $date) : Collection;
+interface TransactionServiceInterface extends BaseServiceInterface
+{
+    public function index(Carbon $date, int $userId): Collection;
 
-    public function store(array $data) : void;
+    public function store(array $data): void;
 }

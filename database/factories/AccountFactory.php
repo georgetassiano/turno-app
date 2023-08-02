@@ -19,7 +19,7 @@ class AccountFactory extends Factory
     {
         return [
             'balance' => $this->faker->randomFloat(2),
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
         ];
     }
 }

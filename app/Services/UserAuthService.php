@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Services;
+
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Arr;
-use App\Services\UserServiceInterface;
 
 class UserAuthService extends BaseService implements UserAuthServiceInterface
 {
@@ -20,25 +20,26 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
 
     /**
      * Check if credentials are valid
-     * @param string $password
-     * @param User|null $user
-     * @return bool|ValidationException
+     *
+     * @param  User|null  $user
+     *
      * @throws ValidationException
      */
-    public function isValidCredentials(string $password, User $user) : bool | ValidationException
+    public function isValidCredentials(string $password, User $user): bool|ValidationException
     {
         if (! $user || ! Hash::check($password, $user->password)) {
             $this->throwInvalidCredentialsException();
         }
+
         return true;
     }
 
     /**
      * Throw invalid credentials exception
-     * @return ValidationException
+     *
      * @throws ValidationException
      */
-    public function throwInvalidCredentialsException() : ValidationException
+    public function throwInvalidCredentialsException(): ValidationException
     {
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
@@ -47,25 +48,24 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
 
     /**
      * Create token for user
-     * @param User $user
-     * @param string $deviceName
-     * @param array $abilities
-     * @return string
+     *
+     * @param  array  $abilities
      */
-    public function createToken(User $user, string $deviceName) : string
+    public function createToken(User $user, string $deviceName): string
     {
         return $user->createToken($deviceName, self::ABILITIES)->plainTextToken;
     }
 
     /**
      * Get token for credentials
-     * @param string $email
-     * @param string $password
-     * @param string $deviceName
-     * @return string|ValidationException
+     *
+     * @param  string  $email
+     * @param  string  $password
+     * @param  string  $deviceName
+     *
      * @throws ValidationException
      */
-    public function getTokenForCredentials(array $data) : string | ValidationException
+    public function getTokenForCredentials(array $data): string|ValidationException
     {
         $user = $this->userService->findUserByEmail($data['email']);
         if ($this->isValidCredentials($data['password'], $user)) {
@@ -75,13 +75,12 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
 
     /**
      * Register new user and create token
-     * @param array $data
-     * @return string
      */
-    public function registerNewUserAndCreateToken(array $data) : string
+    public function registerNewUserAndCreateToken(array $data): string
     {
         $dataUser = Arr::except($data, ['device_name']);
         $user = $this->userService->registerNewUser($dataUser);
+
         return $this->createToken($user, $data['device_name']);
     }
 }

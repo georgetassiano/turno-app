@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Services;
+
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-interface ExpenseServiceInterface extends BaseServiceInterface {
-    public function index(Carbon $date) : Collection;
+interface ExpenseServiceInterface extends BaseServiceInterface
+{
+    public function index(Carbon $date): Collection;
 
-    public function store(array $data) : void;
+    public function store(array $data, int $userId): void;
 }

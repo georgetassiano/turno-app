@@ -11,7 +11,7 @@ class CreateDepositRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,9 +22,9 @@ class CreateDepositRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|decimal:2',
-            'description' => 'required|string'
-            'file' => 'required|file|mimes:jpeg,png,jpg'
+            'amount' => 'required|decimal:0,2',
+            'description' => 'required|string',
+            'file' => 'required|file|mimes:jpeg,png,jpg',
         ];
     }
 }

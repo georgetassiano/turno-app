@@ -2,22 +2,19 @@
 
 namespace App\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\AccountRepository;
 use App\Models\Account;
 use Prettus\Repository\Contracts\CacheableInterface;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Traits\CacheableRepository;
-use App\Criteria\UserAuthenticateCriteria;
 
 /**
  * Class AccountRepositoryEloquent.
- *
- * @package namespace App\Repositories;
  */
 class AccountRepositoryEloquent extends BaseRepository implements AccountRepository, CacheableInterface
 {
     use CacheableRepository;
+
     /**
      * Specify Model class name
      *
@@ -37,10 +34,14 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
     }
 
     /* get balance of authenticated user */
-    public function getBalance() : float
+    public function getBalanceByAccountId($accountId): Account
     {
-        $this->pushCriteria(new UserAuthenticateCriteria());
-        return $this->first(['balance'])->balance;
+        return $this->find($accountId, ['balance']);
     }
 
+    /* get account by user id */
+    public function getAccountByUserId(int $userId): Account
+    {
+        return $this->findByField('user_id', $userId, ['id', 'balance'])->first();
+    }
 }

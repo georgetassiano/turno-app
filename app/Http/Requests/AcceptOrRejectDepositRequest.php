@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateExpenseRequest extends FormRequest
+class AcceptOrRejectDepositRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class CreateExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|decimal:0,2',
-            'description' => 'required|string',
+            'status' => 'required|in:rejected,approved',
         ];
     }
 }

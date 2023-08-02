@@ -18,7 +18,7 @@ class TransactionResource extends JsonResource
             'transactable_type' => $this->transactable_type,
             'transactable_id' => $this->transactable_id,
             'created_at' => $this->created_at,
-            'transactable' => new TransactableResource($this->whenLoaded('transactable'))
+            'transactable' => new TransactableResource($this->transactable),
         ];
     }
 }

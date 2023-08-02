@@ -2,21 +2,19 @@
 
 namespace App\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\UserRepository;
 use App\Models\User;
 use Prettus\Repository\Contracts\CacheableInterface;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Traits\CacheableRepository;
 
 /**
  * Class UserRepositoryEloquent.
- *
- * @package namespace App\Repositories;
  */
 class UserRepositoryEloquent extends BaseRepository implements UserRepository, CacheableInterface
 {
     use CacheableRepository;
+
     /**
      * Specify Model class name
      *
@@ -27,8 +25,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository, C
         return User::class;
     }
 
-
-
     /**
      * Boot up the repository, pushing criteria
      */
@@ -36,5 +32,4 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository, C
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-
 }

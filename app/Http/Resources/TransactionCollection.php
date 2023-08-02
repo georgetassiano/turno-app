@@ -5,7 +5,6 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-
 class TransactionCollection extends ResourceCollection
 {
     /**
@@ -27,14 +26,13 @@ class TransactionCollection extends ResourceCollection
     {
         return [
             'meta' => [
-                'incomes' => $this->collection->sum(function(TransactionResource $transaction) {
+                'incomes' => $this->collection->sum(function (TransactionResource $transaction) {
                     return $transaction['transactable_type'] == 'deposit' ? $transaction['transactable']['amount'] : 0;
                 }),
-                'expenses' => $this->collection->sum(function(TransactionResource $transaction) {
+                'expenses' => $this->collection->sum(function (TransactionResource $transaction) {
                     return $transaction['transactable_type'] == 'expense' ? $transaction['transactable']['amount'] : 0;
                 }),
             ],
         ];
     }
-
 }
