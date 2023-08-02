@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Account;
+use App\Models\User;
+use App\Repositories\AccountRepository;
+use Illuminate\Validation\ValidationException;
+
+class AccountService extends BaseService implements AccountServiceInterface
+{
+    private AccountRepository $accountRepository;
+
+    public function __construct(AccountRepository $accountRepository)
+    {
+        $this->accountRepository = $accountRepository;
+    }
+
+    /** create account for user
+     * @param  int  $userId
+     */
+    public function createAccountForUserId($userId): void
+    {
+        $this->accountRepository->create([
+            'user_id' => $userId,
+        ]);
+    }
+
+    /**
+     * get account by authenticated user
+     *
+     * @return Account
+     */
+    public function getBalanceByUserId(int $userId): float
+    {
+        $account = $this->getAccountByUserId($userId);
+
+        return $account->balance;
+    }
+
+    /**
+     * throw exception if amount is greater than balance
+     */
+    public function throwInvalidAmountException(): ValidationException
+    {
+        throw ValidationException::withMessages([
+            'amount' => 'The amount is greater than the balance',
+        ]);
+    }
+
+    /**
+     * debit amount from account
+     */
+    public function debitAmount(float $amount, int $userId): void
+    {
+        $account = $this->getAccountByUserId($userId);
+        if ($amount > $account->balance) {
+            $this->throwInvalidAmountException();
+        }
+        $this->accountRepository->update(['balance' => $account->balance - $amount], $account->id);
+    }
+
+    /**
+     * credit amount from account
+     */
+    public function creditAmount(float $amount, int $userId): void
+    {
+        $account = $this->getAccountByUserId($userId);
+        $this->accountRepository->update(['balance' => $account->balance + $amount], $account->id);
+    }
+
+    /**
+     * get account by user id
+     */
+    public function getAccountByUserId(int $userId): Account
+    {
+        return $this->accountRepository->getAccountByUserId($userId);
+    }
+}
