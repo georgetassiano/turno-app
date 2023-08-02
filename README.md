@@ -1,66 +1,67 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Turno App Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Inicio do ambiente docker
 
-## About Laravel
+```bash
+# iniciar submodulo do laradock do projeto
+$ git submodule update --init --recursive
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# entrar dentro da pasta do submodule
+$ cd laradock
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# criar o .env local copiando do .env.example do projeto
+$ cp env-example .env
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# editar o .env nos seguintes locais sobre as configurações dos containers
+DATA_PATH_HOST=~/.laradock/data  --> DATA_PATH_HOST=~/.turnobackend/data
+COMPOSE_PROJECT_NAME=laradock  --> COMPOSE_PROJECT_NAME=turnobackend
 
-## Learning Laravel
+# se for usuário windows, alterar também 
+COMPOSE_PATH_SEPARATOR=: --> COMPOSE_PATH_SEPARATOR=;
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# se for usuário linux ou tiver instalado um servidor web e/ou mysql na sua máquina, alterar as seguintes portas
+NGINX_HOST_HTTP_PORT=80 --> NGINX_HOST_HTTP_PORT=8000 por exemplo
+MYSQL_PORT=3306 --> MYSQL_PORT=3307 por exemplo
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# configurar os dados do banco
+MYSQL_DATABASE=default
+MYSQL_USER=default
+MYSQL_PASSWORD=secret
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# subir os containers necessários para o ambiente de desenvolvimento, nginx e mysql
+$ docker-compose up -d nginx mysql
 
-## Laravel Sponsors
+# caso esteja em linux os comandos de docker-compose precisam estar em super usuário. Por exemplo:
+$ sudo docker-compose up -d nginx mysql
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# entrar dentro do container de área de trabalho
+$ docker-compose exec workspace bash
+|
+```
 
-### Premium Partners
+Para detalhes da documentação do Laradock  [Laradock docs](https://laradock.io/).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Inicio da aplicação Laravel
 
-## Contributing
+```bash
+# instalar as dependencias do projeto
+$ composer install
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# criar o .env 
+$ cp .env.example .env
 
-## Code of Conduct
+# iniciar a key da aplicação
+$ artisan key:generate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# configurar os seguintes locais do .env
+APP_NAME=Laravel --> APP_NAME=TurnoBackend
+DB_HOST=127.0.0.1 --> DB_HOST=mysql
+DB_DATABASE=laravel --> DB_DATABASE=default
+DB_USERNAME= --> DB_USERNAME=default
+DB_PASSWORD= --> DB_PASSWORD=secret
 
-## Security Vulnerabilities
+# rodar as migrations e as seeders do projeto
+$ artisan migrate --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Para detalhes da documentação do Laravel [Laravel docs](https://laravel.com).
