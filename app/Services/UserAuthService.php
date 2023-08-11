@@ -42,7 +42,7 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
     public function throwInvalidCredentialsException(): ValidationException
     {
         throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
+            'password' => ['The provided credentials are incorrect.'],
         ]);
     }
 
