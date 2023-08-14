@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum', 'abilities:guard-user'])->group(function () {
     // User auth routes
     Route::prefix('auth')->group(function () {
         Route::post('/logout', [UserAuthController::class, 'logout']);
+        Route::get('/user', [UserAuthController::class, 'user']);
     });
 
     // User deposit routes

@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\AuthUserResource;
 
 class AuthController extends Controller
 {
@@ -42,4 +43,13 @@ class AuthController extends Controller
 
         return response()->json('Usuário deslogado com sucesso');
     }
+
+    /**
+     * get authenticated user
+     */
+    public function user(Request $request): AuthUserResource
+    {
+        return new AuthUserResource($request->user());
+    }
+
 }

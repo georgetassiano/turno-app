@@ -22,6 +22,7 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
      * Check if credentials are valid
      *
      * @param  User|null  $user
+     * @param  string  $password
      *
      * @throws ValidationException
      */
@@ -48,8 +49,9 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
 
     /**
      * Create token for user
-     *
-     * @param  array  $abilities
+     * @param  User  $user
+     * @param  string  $deviceName
+     * @return string
      */
     public function createToken(User $user, string $deviceName): string
     {
@@ -75,6 +77,7 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
 
     /**
      * Register new user and create token
+     * @param  array<string>  $data
      */
     public function registerNewUserAndCreateToken(array $data): string
     {

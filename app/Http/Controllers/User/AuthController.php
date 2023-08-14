@@ -9,6 +9,7 @@ use App\Services\UserAuthServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\AuthUserResource;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,7 @@ class AuthController extends Controller
         $data = $request->validated();
         $token = $this->userAuthService->getTokenForCredentials($data);
 
-        return response()->json($token);
+        return response()->json(['token' => $token]);
     }
 
     /**
@@ -48,6 +49,11 @@ class AuthController extends Controller
         $data = $request->validated();
         $token = $this->userAuthService->registerNewUserAndCreateToken($data);
 
-        return response()->json($token, 201);
+        return response()->json(['token' => $token], 201);
+    }
+
+    public function user(Request $request): JsonResponse
+    {
+        return response()->json(new AuthUserResource($request->user()));
     }
 }
