@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use OwenIt\Auditing\Contracts\Auditable;
 /**
- * Class Deposit.
+ * Class Check.
  */
-class Deposit extends Model implements Auditable
+class Check extends Model implements Auditable
 {
     use HasFactory, \OwenIt\Auditing\Auditable;
 
@@ -22,7 +22,7 @@ class Deposit extends Model implements Auditable
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     /**
-     * Get the transaction for the deposit
+     * Get the transaction for the check
      */
     public function transaction(): MorphOne
     {
@@ -30,7 +30,7 @@ class Deposit extends Model implements Auditable
     }
 
     /**
-     * Get the user that owns the Deposit
+     * Get the user that owns the check
      */
     public function user(): BelongsTo
     {

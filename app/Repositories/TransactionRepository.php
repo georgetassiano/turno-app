@@ -11,4 +11,6 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface TransactionRepository extends RepositoryInterface
 {
     public function getTransactionsInMonthAndYearByAccountWithTransactable(int $month, int $year, int $accountId): Collection;
+
+    public function datesToFilter(int $accountId) : Collection;
 }

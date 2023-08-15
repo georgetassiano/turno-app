@@ -22,8 +22,10 @@ class AuthController extends Controller
 
     /**
      * login user
+     * @param LoginRequest $request
+     * @return JsonResponse
      */
-    public function login(LoginRequest $request): JsonResponse|ValidationException
+    public function login(LoginRequest $request): JsonResponse
     {
         $data = $request->validated();
         $token = $this->userAuthService->getTokenForCredentials($data);
@@ -33,6 +35,8 @@ class AuthController extends Controller
 
     /**
      * logout user
+     * @param Request $request
+     * @return JsonResponse
      */
     public function logout(Request $request): JsonResponse
     {
@@ -43,6 +47,8 @@ class AuthController extends Controller
 
     /**
      * register new user
+     * @param RegisterUserRequest $request
+     * @return JsonResponse
      */
     public function register(RegisterUserRequest $request): JsonResponse
     {
@@ -52,6 +58,11 @@ class AuthController extends Controller
         return response()->json(['token' => $token], 201);
     }
 
+    /**
+     * get user authenticated
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function user(Request $request): JsonResponse
     {
         return response()->json(new AuthUserResource($request->user()));

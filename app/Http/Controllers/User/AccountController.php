@@ -18,7 +18,7 @@ class AccountController extends Controller
     /**
      * get balance of authenticated user
      *
-     * @return float
+     * @return JsonResponse
      */
     public function balance() : JsonResponse
     {

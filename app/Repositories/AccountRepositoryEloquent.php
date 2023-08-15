@@ -33,14 +33,20 @@ class AccountRepositoryEloquent extends BaseRepository implements AccountReposit
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    /* get balance of authenticated user */
-    public function getBalanceByAccountId($accountId): Account
+    /** get balance of authenticated user
+     * @param  int  $userId
+     * @return Account
+     */
+    public function getBalanceByAccountId(int $accountId): ?Account
     {
         return $this->find($accountId, ['balance']);
     }
 
-    /* get account by user id */
-    public function getAccountByUserId(int $userId): Account
+    /** get account by user id
+     * @param  int  $userId
+     * @return Account
+    */
+    public function getAccountByUserId(int $userId): ?Account
     {
         return $this->findByField('user_id', $userId, ['id', 'balance'])->first();
     }

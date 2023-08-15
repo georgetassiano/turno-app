@@ -31,7 +31,7 @@ class AuthController extends Controller
             ]);
         }
 
-        return response()->json($user->createToken($data['device_name'], ['guard-admin'])->plainTextToken);
+        return response()->json(['token' => $user->createToken($data['device_name'], ['guard-admin'])->plainTextToken]);
     }
 
     /**
@@ -47,9 +47,9 @@ class AuthController extends Controller
     /**
      * get authenticated user
      */
-    public function user(Request $request): AuthUserResource
+    public function user(Request $request): JsonResponse
     {
-        return new AuthUserResource($request->user());
+        return response()->json(new AuthUserResource($request->user()));
     }
 
 }

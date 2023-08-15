@@ -11,4 +11,6 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface ExpenseRepository extends RepositoryInterface
 {
     public function getExpensesInMonthAndYearByUserAuthenticate(int $month, int $year): Collection;
+
+    public function datesToFilter(int $userId) : Collection;
 }
