@@ -9,5 +9,7 @@ interface ExpenseServiceInterface extends BaseServiceInterface
 {
     public function index(Carbon $date): Collection;
 
-    public function store(array $data, int $userId): void;
+    public function store(array $data, int $userId);
+
+    public function datesToFilter(int $userId): Collection;
 }

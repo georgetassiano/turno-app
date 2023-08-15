@@ -9,5 +9,7 @@ interface TransactionServiceInterface extends BaseServiceInterface
 {
     public function index(Carbon $date, int $userId): Collection;
 
-    public function store(array $data): void;
+    public function store(array $data);
+
+    public function datesToFilter(int $userId): Collection;
 }

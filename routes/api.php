@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\Admin\DepositController as AdminDepositController;
+use App\Http\Controllers\Admin\CheckController as AdminCheckController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\AuthController as UserAuthController;
-use App\Http\Controllers\User\DepositController;
+use App\Http\Controllers\User\CheckController;
 use App\Http\Controllers\User\ExpenseController;
 use App\Http\Controllers\User\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -26,14 +26,17 @@ Route::middleware(['auth:sanctum', 'abilities:guard-user'])->group(function () {
     // User auth routes
     Route::prefix('auth')->group(function () {
         Route::post('/logout', [UserAuthController::class, 'logout']);
+        Route::get('/user', [UserAuthController::class, 'user']);
     });
 
-    // User deposit routes
-    Route::prefix('deposits')->group(function () {
-        // create deposit
-        Route::post('/', [DepositController::class, 'store']);
-        // get all deposits
-        Route::get('/', [DepositController::class, 'index']);
+    // User check routes
+    Route::prefix('checks')->group(function () {
+        // create check
+        Route::post('/', [CheckController::class, 'store']);
+        // get all checks
+        Route::get('/', [CheckController::class, 'index']);
+        // get dates to filter
+        Route::get('/dates', [CheckController::class, 'datesToFilter']);
     });
 
     // User expense routes
@@ -42,13 +45,20 @@ Route::middleware(['auth:sanctum', 'abilities:guard-user'])->group(function () {
         Route::post('/', [ExpenseController::class, 'store']);
         // get all expenses
         Route::get('/', [ExpenseController::class, 'index']);
+        // get dates to filter
+        Route::get('/dates', [ExpenseController::class, 'datesToFilter']);
     });
 
     // get user balance
     Route::get('/balance', [AccountController::class, 'balance']);
 
-    // get user transactions history (deposits and expenses)
-    Route::get('/transactions', [TransactionController::class, 'index']);
+    // get user transactions history (checks and expenses)
+    Route::prefix('transactions')->group(function () {
+        Route::get('/', [TransactionController::class, 'index']);
+        // get dates to filter
+        Route::get('/dates', [TransactionController::class, 'datesToFilter']);
+    });
+
 });
 
 // User unauthenticated routes
@@ -65,14 +75,17 @@ Route::prefix('admin')->group(function () {
         // Admin auth routes
         Route::prefix('auth')->group(function () {
             Route::post('/logout', [AdminAuthController::class, 'logout']);
+            Route::get('/user', [AdminAuthController::class, 'user']);
         });
 
-        // Admin deposits routes
-        Route::prefix('deposits')->group(function () {
-            // get all deposits
-            Route::get('/', [AdminDepositController::class, 'index']);
-            // accept or reject deposit
-            Route::patch('/{depositId}', [AdminDepositController::class, 'acceptOrReject']);
+        // Admin checks routes
+        Route::prefix('checks')->group(function () {
+            // get all pending checks
+            Route::get('/', [AdminCheckController::class, 'index']);
+            // get pending check by id
+            Route::get('/{checkId}', [AdminCheckController::class, 'show']);
+            // accept or reject check
+            Route::patch('/{checkId}', [AdminCheckController::class, 'acceptOrReject']);
         });
 
     });

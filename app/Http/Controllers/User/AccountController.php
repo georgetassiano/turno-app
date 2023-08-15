@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Services\AccountServiceInterface;
+use Illuminate\Http\JsonResponse;
 
 class AccountController extends Controller
 {
@@ -17,11 +18,12 @@ class AccountController extends Controller
     /**
      * get balance of authenticated user
      *
-     * @return float
+     * @return JsonResponse
      */
-    public function balance()
+    public function balance() : JsonResponse
     {
         throw_if(!auth()->user()->hasAnyPermission(['*'], 'web'), AuthorizationException::class);
-        return $this->accountService->getBalanceByUserId(auth()->user()->id);
+        $balance = $this->accountService->getBalanceByUserId(auth()->user()->id);
+        return response()->json(['balance' => $balance]);
     }
 }

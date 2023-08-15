@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Criteria\UserAuthenticateCriteria;
-use App\Models\Expense;
+use App\Models\Check;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -12,9 +12,9 @@ use Prettus\Repository\Traits\CacheableRepository;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class ExpenseRepositoryEloquent.
+ * Class CheckRepositoryEloquent.
  */
-class ExpenseRepositoryEloquent extends BaseRepository implements ExpenseRepository, CacheableInterface
+class CheckRepositoryEloquent extends BaseRepository implements CheckRepository, CacheableInterface
 {
     use CacheableRepository;
 
@@ -25,7 +25,7 @@ class ExpenseRepositoryEloquent extends BaseRepository implements ExpenseReposit
      */
     public function model()
     {
-        return Expense::class;
+        return Check::class;
     }
 
     /**
@@ -36,12 +36,12 @@ class ExpenseRepositoryEloquent extends BaseRepository implements ExpenseReposit
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    /** get expenses in month and year by user authenticate
-     * @param  int  $month
-     * @param  int  $year
+    /**  get Checks in month and year by user authenticate
+     * @param  string  $month
+     * @param  string  $year
      * @return Collection
     */
-    public function getExpensesInMonthAndYearByUserAuthenticate(int $month, int $year): Collection
+    public function getChecksInMonthAndYearByUserAuthenticate(string $month, string $year): Collection
     {
         $this->pushCriteria(new UserAuthenticateCriteria());
 
@@ -50,12 +50,33 @@ class ExpenseRepositoryEloquent extends BaseRepository implements ExpenseReposit
         })->orderBy('created_at', $direction = 'desc')->all();
     }
 
+    /** get Checks pending
+     * @return Collection
+    */
+    public function getPendingChecks(): Collection
+    {
+        return $this->with(['user:id,name,email', 'user.account:id,user_id'])->findByField('status', 'pending', ['id', 'amount', 'description', 'user_id', 'created_at']);
+    }
+
+    /** get Check by id
+     * @param  int  $checkId
+     * @return Check
+    */
+    public function getPendingCheckById(int $checkId) : ?Check
+    {
+        return $this->with(['user:id,name,email', 'user.account:id,user_id'])
+        ->findWhere([
+            'id' => $checkId,
+            'status' => 'pending',
+        ], ['id', 'amount', 'description', 'user_id', 'created_at'])->first();
+    }
+
     /** get dates by month and year to filter
      * @param  int  $userId
      * @return Collection
     */
     public function datesToFilter(int $userId) : Collection {
-        return DB::table('expenses')->selectRaw('MONTH(created_at) as month, YEAR(created_at) as year')
+        return DB::table('checks')->selectRaw('MONTH(created_at) as month, YEAR(created_at) as year')
         ->where('user_id', $userId)
         ->groupBy('month', 'year')
         ->orderBy('year', 'desc')

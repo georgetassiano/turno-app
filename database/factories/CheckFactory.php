@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class DepositFactory extends Factory
+class CheckFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -27,7 +27,7 @@ class DepositFactory extends Factory
     }
 
     /**
-     * Indicate that the deposit is pending.
+     * Indicate that the check is pending.
      */
     public function pending(): Factory
     {
@@ -39,7 +39,7 @@ class DepositFactory extends Factory
     }
 
     /**
-     * Indicate that the deposit is canceled.
+     * Indicate that the check is canceled.
      */
     public function rejected(): Factory
     {
@@ -51,7 +51,7 @@ class DepositFactory extends Factory
     }
 
     /**
-     * Indicate that the deposit is approved.
+     * Indicate that the check is approved.
      */
     public function approved(): Factory
     {

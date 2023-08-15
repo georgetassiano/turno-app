@@ -21,6 +21,7 @@ class UserService extends BaseService implements UserServiceInterface
 
     /**
      * Find user by email
+     * @param  string  $email
      */
     public function findUserByEmail(string $email): ?User
     {
@@ -29,6 +30,7 @@ class UserService extends BaseService implements UserServiceInterface
 
     /**
      * Register new user
+     * @param  array  $data
      */
     public function registerNewUser(array $data): User
     {

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->enum('transactable_type', ['deposit', 'expense']);
+            $table->enum('transactable_type', ['checks', 'expenses']);
             $table->unsignedBigInteger('transactable_id');
             $table->foreignId('account_id')->constrained();
             $table->timestamps();

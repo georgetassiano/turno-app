@@ -22,34 +22,24 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
      * Check if credentials are valid
      *
      * @param  User|null  $user
+     * @param  string  $password
      *
      * @throws ValidationException
      */
-    public function isValidCredentials(string $password, User $user): bool|ValidationException
+    public function throwExceptionIfIsInvalidCredentials(string $password, User $user)
     {
         if (! $user || ! Hash::check($password, $user->password)) {
-            $this->throwInvalidCredentialsException();
+            throw ValidationException::withMessages([
+                'password' => ['The provided credentials are incorrect.'],
+            ]);
         }
-
-        return true;
-    }
-
-    /**
-     * Throw invalid credentials exception
-     *
-     * @throws ValidationException
-     */
-    public function throwInvalidCredentialsException(): ValidationException
-    {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
     }
 
     /**
      * Create token for user
-     *
-     * @param  array  $abilities
+     * @param  User  $user
+     * @param  string  $deviceName
+     * @return string
      */
     public function createToken(User $user, string $deviceName): string
     {
@@ -65,22 +55,21 @@ class UserAuthService extends BaseService implements UserAuthServiceInterface
      *
      * @throws ValidationException
      */
-    public function getTokenForCredentials(array $data): string|ValidationException
+    public function getTokenForCredentials(array $data): string
     {
         $user = $this->userService->findUserByEmail($data['email']);
-        if ($this->isValidCredentials($data['password'], $user)) {
-            return $this->createToken($user, $data['device_name']);
-        }
+        $this->throwExceptionIfIsInvalidCredentials($data['password'], $user);
+        return $this->createToken($user, $data['device_name']);
     }
 
     /**
      * Register new user and create token
+     * @param  array<string>  $data
      */
     public function registerNewUserAndCreateToken(array $data): string
     {
         $dataUser = Arr::except($data, ['device_name']);
         $user = $this->userService->registerNewUser($dataUser);
-
         return $this->createToken($user, $data['device_name']);
     }
 }

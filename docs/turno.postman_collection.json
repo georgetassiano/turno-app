@@ -52,7 +52,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "9|57h3AfdbnWBmT8ubmSibz5SWOgleaRvnVApWBCxy",
+									"value": "8|5pKK04DJ8UZCNeTjRT9cjQWY6jkskpHdKkdZbST5",
 									"type": "string"
 								}
 							]
@@ -82,14 +82,14 @@
 					"response": []
 				},
 				{
-					"name": "update status deposit",
+					"name": "update status check",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "10|MPPODZmqOacfpPZUuVrnnk6bEZ6ozQX9VJY58pXx",
+									"value": "1|FAJ1vPHwoVJu7UYPICbCgAGR5MJoEADRp1P2TVYW",
 									"type": "string"
 								}
 							]
@@ -104,7 +104,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\": \"approved\"\r\n}",
+							"raw": "{\r\n    \"status\": \"rejected\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -112,7 +112,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api/admin/deposits/481",
+							"raw": "http://localhost/api/admin/deposits/513",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -121,14 +121,14 @@
 								"api",
 								"admin",
 								"deposits",
-								"481"
+								"513"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "get deposits peding",
+					"name": "get pending checks",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -138,7 +138,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "10|MPPODZmqOacfpPZUuVrnnk6bEZ6ozQX9VJY58pXx",
+									"value": "2|ukM4KXgGFiWxZ4YtRrjxtEwEsdV8LlvDC1qzwJ7z",
 									"type": "string"
 								}
 							]
@@ -161,7 +161,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api/admin/deposits",
+							"raw": "http://localhost/api/admin/checks",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -169,7 +169,105 @@
 							"path": [
 								"api",
 								"admin",
-								"deposits"
+								"checks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pending check",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ukM4KXgGFiWxZ4YtRrjxtEwEsdV8LlvDC1qzwJ7z",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/admin/checks/504",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"admin",
+								"checks",
+								"504"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ukM4KXgGFiWxZ4YtRrjxtEwEsdV8LlvDC1qzwJ7z",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/admin/auth/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"admin",
+								"auth",
+								"user"
 							]
 						}
 					},
@@ -193,7 +291,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"george.melo7@gmail.com\",\r\n    \"password\": \"password\",\r\n    \"device_name\": \"chrome\"\r\n}",
+							"raw": "{\r\n    \"email\": \"george.melo7@gmail.com\",\r\n    \"password\": \"secret\",\r\n    \"device_name\": \"chrome\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -223,7 +321,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "6|ct9TT8ve766A9IN3jdhXDcLlqwQYtctc5kmizVHj",
+									"value": "5|ItBEgx4GSiuGpdUgQQPZjd5cZbIVaTAvBEQigJxQ",
 									"type": "string"
 								}
 							]
@@ -264,7 +362,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"teste\",\r\n    \"email\": \"teste2@teste.com\",\r\n    \"password\": \"password\",\r\n    \"password_confirmation\": \"password\",\r\n    \"device_name\": \"chrome\"\r\n}",
+							"raw": "{\r\n    \"name\": \"teste\",\r\n    \"email\": \"teste3@teste.com\",\r\n    \"password\": \"password\",\r\n    \"password_confirmation\": \"password\",\r\n    \"device_name\": \"chrome\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -294,7 +392,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "7|nm2NlIUHAcjolL4CZ2eDpKvAX3nZfKcPKRHYcDi3",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
 									"type": "string"
 								}
 							]
@@ -329,7 +427,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "7|nm2NlIUHAcjolL4CZ2eDpKvAX3nZfKcPKRHYcDi3",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
 									"type": "string"
 								}
 							]
@@ -363,6 +461,42 @@
 					"response": []
 				},
 				{
+					"name": "get dates to filter transactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/transactions/dates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"transactions",
+								"dates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get expenses",
 					"request": {
 						"auth": {
@@ -370,7 +504,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "7|nm2NlIUHAcjolL4CZ2eDpKvAX3nZfKcPKRHYcDi3",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
 									"type": "string"
 								}
 							]
@@ -404,6 +538,42 @@
 					"response": []
 				},
 				{
+					"name": "get dates to filter expenses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/expenses/dates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"dates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create expense",
 					"request": {
 						"auth": {
@@ -411,7 +581,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|o9UunEbCmd6Cg9PcN2lHeZHCJl0usNOv8OQFGWs3",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
 									"type": "string"
 								}
 							]
@@ -426,7 +596,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\" : 10.5,\r\n    \"description\": \"blablabla\"\r\n}",
+							"raw": "{\r\n    \"amount\" : 300000000.00,\r\n    \"description\": \"blablabla\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -448,14 +618,14 @@
 					"response": []
 				},
 				{
-					"name": "get deposits",
+					"name": "get checks",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "7|nm2NlIUHAcjolL4CZ2eDpKvAX3nZfKcPKRHYcDi3",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
 									"type": "string"
 								}
 							]
@@ -469,14 +639,14 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost/api/deposits?year-month=2023-08",
+							"raw": "http://localhost/api/checks?year-month=2023-08",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api",
-								"deposits"
+								"checks"
 							],
 							"query": [
 								{
@@ -489,14 +659,50 @@
 					"response": []
 				},
 				{
-					"name": "create deposit",
+					"name": "get dates to filter credits",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|o9UunEbCmd6Cg9PcN2lHeZHCJl0usNOv8OQFGWs3",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api/checks/dates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"checks",
+								"dates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|RIuIQnTiCp6gD5oCaA1MgM3O72UYbC8GHKSCNdvY",
 									"type": "string"
 								}
 							]
@@ -514,7 +720,7 @@
 							"formdata": [
 								{
 									"key": "amount",
-									"value": "233.4",
+									"value": "100",
 									"type": "default"
 								},
 								{
@@ -535,14 +741,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost/api/deposits",
+							"raw": "http://localhost/api/checks",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api",
-								"deposits"
+								"checks"
 							]
 						}
 					},

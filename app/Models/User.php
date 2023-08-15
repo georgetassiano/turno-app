@@ -53,11 +53,11 @@ class User extends Authenticatable implements Auditable
     }
 
     /**
-     * Get the deposits for the user.
+     * Get the checks for the user.
      */
-    public function deposits(): HasMany
+    public function checks(): HasMany
     {
-        return $this->hasMany(Deposit::class);
+        return $this->hasMany(Check::class);
     }
 
     /**

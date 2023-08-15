@@ -10,7 +10,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface AccountRepository extends RepositoryInterface
 {
-    public function getBalanceByAccountId($accountId): Account;
+    public function getBalanceByAccountId(int $accountId): ?Account;
 
-    public function getAccountByUserId(int $userId): Account;
+    public function getAccountByUserId(int $userId): ?Account;
 }

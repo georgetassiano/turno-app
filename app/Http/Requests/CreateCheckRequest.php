@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateDepositRequest extends FormRequest
+class CreateCheckRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class CreateDepositRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|decimal:0,2',
+            'amount' => 'required|decimal:0,2|min:0.01',
             'description' => 'required|string',
             'file' => 'required|file|mimes:jpeg,png,jpg',
         ];

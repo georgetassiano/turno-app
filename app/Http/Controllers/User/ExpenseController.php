@@ -21,6 +21,8 @@ class ExpenseController extends Controller
 
     /**
      * get expenses in month and year by account
+     * @param FilterByMonthAndYearRequest $request
+     * @return ResourceCollection
      */
     public function index(FilterByMonthAndYearRequest $request): ResourceCollection
     {
@@ -32,6 +34,8 @@ class ExpenseController extends Controller
 
     /**
      * store expense
+     * @param CreateExpenseRequest $request
+     * @return JsonResponse
      */
     public function store(CreateExpenseRequest $request): JsonResponse
     {
@@ -42,5 +46,17 @@ class ExpenseController extends Controller
         return response()->json([
             'message' => 'User expense created successfully',
         ], 201);
+    }
+
+    /**
+     * get dates to filter expenses
+     * @return JsonResponse
+     */
+    public function datesToFilter() : JsonResponse
+    {
+        throw_if(!auth()->user()->hasAnyPermission(['*'], 'web'), AuthorizationException::class);
+        $dates = $this->expenseService->datesToFilter(auth()->user()->id);
+
+        return response()->json(['data' => $dates]);
     }
 }
