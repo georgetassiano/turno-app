@@ -47,7 +47,7 @@ class CheckRepositoryEloquent extends BaseRepository implements CheckRepository,
 
         return $this->scopeQuery(function ($query) use ($month, $year) {
             return $query->whereMonth('created_at', $month)->whereYear('created_at', $year);
-        })->all();
+        })->orderBy('created_at', $direction = 'desc')->all();
     }
 
     /** get Checks pending

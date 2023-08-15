@@ -47,7 +47,7 @@ class ExpenseRepositoryEloquent extends BaseRepository implements ExpenseReposit
 
         return $this->scopeQuery(function ($query) use ($month, $year) {
             return $query->whereMonth('created_at', $month)->whereYear('created_at', $year);
-        })->all();
+        })->orderBy('created_at', $direction = 'desc')->all();
     }
 
     /** get dates by month and year to filter

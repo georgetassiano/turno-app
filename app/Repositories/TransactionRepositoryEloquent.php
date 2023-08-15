@@ -45,7 +45,7 @@ class TransactionRepositoryEloquent extends BaseRepository implements Transactio
     {
         return $this->with(['transactable:id,amount,description'])->scopeQuery(function ($query) use ($month, $year) {
             return $query->whereMonth('created_at', $month)->whereYear('created_at', $year);
-        })->findByField('account_id', $accountId, ['created_at', 'transactable_type', 'transactable_id']);
+        })->orderBy('created_at', $direction = 'desc')->findByField('account_id', $accountId, ['created_at', 'transactable_type', 'transactable_id']);
     }
 
     /** get dates by month and year to filter
