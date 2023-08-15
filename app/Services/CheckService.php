@@ -141,7 +141,7 @@ class CheckService extends BaseService implements CheckServiceInterface
     /**
      * throw exception if Check is not pending
      */
-    public function throwExceptionIfCheckIsNotPending()
+    public function throwExceptionIfCheckIsNotPending(Check $check)
     {
         if ($check->status != 'pending') {
             throw ValidationException::withMessages([

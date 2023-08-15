@@ -22,7 +22,7 @@ class CreateCheckRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|decimal:0,2',
+            'amount' => 'required|decimal:0,2|min:0.01',
             'description' => 'required|string',
             'file' => 'required|file|mimes:jpeg,png,jpg',
         ];
