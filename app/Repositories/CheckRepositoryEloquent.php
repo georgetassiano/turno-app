@@ -55,7 +55,7 @@ class CheckRepositoryEloquent extends BaseRepository implements CheckRepository,
     */
     public function getPendingChecks(): Collection
     {
-        return $this->with(['user:id,name,email', 'user.account:id,user_id'])->findByField('status', 'pending', ['id', 'amount', 'description', 'user_id', 'created_at']);
+        return $this->with(['user:id,name,email', 'user.account:id,user_id'])->findByField('status', 'pending', ['id', 'amount', 'description', 'user_id', 'created_at', 'file_path']);
     }
 
     /** get Check by id
@@ -68,7 +68,7 @@ class CheckRepositoryEloquent extends BaseRepository implements CheckRepository,
         ->findWhere([
             'id' => $checkId,
             'status' => 'pending',
-        ], ['id', 'amount', 'description', 'user_id', 'created_at'])->first();
+        ], ['id', 'amount', 'description', 'user_id', 'created_at', 'file_path'])->first();
     }
 
     /** get dates by month and year to filter
