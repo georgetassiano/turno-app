@@ -61,7 +61,7 @@ class CheckService extends BaseService implements CheckServiceInterface
      */
     public function store(array $data, int $userId)
     {
-        $path = Storage::putFile('file_Checks', $data['file']);
+        $path = Storage::putFile('file_checks', $data['file']);
         $dataCheck = array_merge(Arr::except($data, ['file']),
             [
                 'user_id' => $userId,
